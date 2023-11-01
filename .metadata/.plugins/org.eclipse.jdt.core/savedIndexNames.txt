@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+D:\EclipseFiles\CrudEmJava2.0\.metadata\.plugins\org.eclipse.jdt.core
+2014287071.index
+1624460981.index
+3006345759.index
+1865797976.index

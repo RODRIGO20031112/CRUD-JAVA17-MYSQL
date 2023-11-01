@@ -1,0 +1,35 @@
+package br.com.agenda.aplicacao;
+
+import java.util.Date;
+import java.util.Scanner;
+
+import br.com.agenda.dao.ContatoDAO;
+import br.com.agenda.model.Contato;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		Scanner s = new Scanner(System.in);
+		
+		System.out.printf("Informe um cpf: ");
+		String cpf = s.nextLine();
+		
+		System.out.printf("Informe um nome: ");
+		String nome = s.nextLine();
+		
+		System.out.printf("Informe uma idade: ");
+		int idade = s.nextInt();
+			
+		
+		
+		ContatoDAO contatoDAO = new ContatoDAO();
+		
+		Contato contato = new Contato();
+		contato.setNome(nome);
+		contato.setIdade(idade);
+		contato.setDataCadastro(new Date());
+		contato.setCpf(cpf);
+		
+		contatoDAO.save(contato);
+	}
+}

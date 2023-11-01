@@ -1,0 +1,95 @@
+package br.com.agenda.aplicacao;
+
+import java.util.Date;
+import java.util.Scanner;
+
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
+import br.com.agenda.dao.ContatoDAO;
+import br.com.agenda.model.Contato;
+
+public class Main {
+	public static void main(String[] args) {
+		
+		 int x = 1;
+		 
+		 while (x != 0) {
+			System.out.println("1-Inserir usuários dentro do banco de dados: ");
+			System.out.println("2-Ver usuários inseridos no  banco de dados: ");
+			System.out.println("3-Alterar usuários dentro do banco de dados: ");
+			System.out.println("4-Deletar usuários dentro do banco de dados: ");
+			Scanner y = new Scanner(System.in);
+			int opcao = y.nextInt();
+				if (opcao == 1) {
+					
+					ContatoDAO contatoDAO = new ContatoDAO();
+					 
+					Scanner s = new Scanner(System.in);
+				
+					System.out.printf("Informe um cpf: ");
+					String cpf = s.nextLine();
+					
+					System.out.printf("Informe um nome: ");
+					String nome = s.nextLine();
+					
+					System.out.printf("Informe uma idade: ");
+					int idade = s.nextInt();
+					 
+					Contato contato = new Contato();
+					contato.setNome(nome);
+					contato.setIdade(idade);
+					contato.setDataCadastro(new Date());
+					contato.setCpf(cpf);
+						 
+					contatoDAO.save(contato);
+						
+				} else if(opcao == 2) {
+					ContatoDAO contatoDAO = new ContatoDAO();
+					for(Contato c : contatoDAO.getContatos()) {
+						System.out.println("[Contato: "
+						+c.getNome()+" Idade: "
+						+c.getIdade()+" Data de Cadastro: "	
+						+c.getDataCadastro()+" CPF: "
+						+c.getCpf()
+						+"]");
+					}
+				} else if (opcao == 3) {
+					Scanner s1 = new Scanner(System.in);
+					String cpf = s1.nextLine();
+					
+					Contato c1 = new Contato();
+					//CPF que esta no banco (c1.setCpf(cpf)
+					if(c1.setCpf(cpf) == false) {
+						Scanner s = new Scanner(System.in);
+							
+						System.out.printf("Informe um nome: ");
+						String nome = s.nextLine();
+							
+						System.out.printf("Informe uma idade: ");
+						int idade = s.nextInt();
+							
+						c1.setNome(nome);
+						c1.setIdade(idade);
+						c1.setDataCadastro(new Date());
+							
+						ContatoDAO contatoDAO = new ContatoDAO();
+						//Regra de negócio (Método update)
+						contatoDAO.update(c1);
+					} else {
+						System.out.print("Este CPF não existe");
+					}
+							
+				} else if (opcao == 4) {
+					Scanner j = new Scanner(System.in);
+					String cpfU = j.nextLine();
+					Contato c1 = new Contato();
+						if(cpfU.equals(c1.getCpf())) {
+							ContatoDAO contatoDAO = new ContatoDAO();
+							contatoDAO.deleteByCpf(cpfU);
+						} else {
+							System.out.println("Este cpf não existe");
+						}
+				} 
+		 }
+	}
+}
